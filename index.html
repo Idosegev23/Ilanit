@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>שיעורים פרטיים בחשבון - אילנית שגב</title>
+    <meta name="description" content="שיעורים פרטיים בחשבון עם הוראה מתקנת באשקלון - אילנית שגב. גישה אישית, חווית למידה ייחודית ופיתוח ביטחון עצמי">
+    <title>שיעורים פרטיים בחשבון - אילנית שגב | הוראה מתקנת באשקלון</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <style>
@@ -49,6 +50,7 @@
             justify-content: center;
             list-style: none;
             gap: 2.5rem;
+            transition: all 0.3s ease;
         }
 
         nav a {
@@ -63,6 +65,55 @@
         nav a:hover {
             color: var(--primary-color);
             background-color: var(--light-bg);
+        }
+
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-button span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-color);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .mobile-menu-button.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .mobile-menu-button.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-button.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .menu-overlay.active {
+            display: block;
         }
 
         .hero {
@@ -201,79 +252,158 @@
         }
 
         @media (max-width: 768px) {
+            .mobile-menu-button {
+                display: block;
+            }
+
             nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: var(--card-bg);
                 flex-direction: column;
+                justify-content: flex-start;
+                padding-top: 5rem;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                transition: right 0.3s ease;
+            }
+
+            nav ul.active {
+                right: 0;
+            }
+
+            nav ul li {
+                width: 100%;
                 text-align: center;
-                gap: 1rem;
+                padding: 1rem;
+            }
+
+            nav a {
+                display: block;
+                padding: 1rem;
+                width: 100%;
             }
 
             .hero {
-                padding: 6rem 1rem 3rem;
+                padding: 5rem 1rem 2rem;
             }
 
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                padding: 0 1rem;
             }
 
             .section {
-                padding: 3rem 1rem;
+                padding: 2.5rem 1rem;
+            }
+
+            .method-card {
+                padding: 1.5rem;
             }
 
             .cta {
                 flex-direction: column;
                 align-items: center;
+                gap: 1rem;
+            }
+
+            .cta .button {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            .image-placeholder {
+                height: 200px;
             }
         }
     </style>
 </head>
 <body>
     <nav>
+        <button class="mobile-menu-button" aria-label="תפריט">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <ul>
             <li><a href="#about">אודותיי</a></li>
             <li><a href="#methods">דרך הלימוד</a></li>
             <li><a href="#vision">החזון</a></li>
+            <li><a href="#benefits">יתרונות</a></li>
             <li><a href="#faq">שאלות נפוצות</a></li>
             <li><a href="#contact">צרו קשר</a></li>
         </ul>
     </nav>
+    <div class="menu-overlay"></div>
 
     <section class="hero" data-aos="fade-up">
-        <h1>בואו נלמד חשבון בדרך חדשה</h1>
-        <p>שלום, אני אילנית שגב. אני מזמינה אתכם להצטרף למסע של למידה מותאמת אישית, שתעניק לילדיכם את הכלים והביטחון להצליח בחשבון ומעבר לכך.</p>
+        <h1>בואו נהפוך את החשבון לחוויה מעצימה</h1>
+        <p>היי, אני אילנית שגב, מורה פרטית לחשבון עם התמחות בהוראה מתקנת. יחד ניצור מסע למידה מותאם אישית שיעניק לילדיכם לא רק הבנה מעמיקה בחשבון, אלא גם כלים לחיים וביטחון עצמי מחוזק.</p>
         <div class="image-placeholder">תמונה ראשית</div>
     </section>
 
     <section id="about" class="section" data-aos="fade-up">
-        <h2>קצת עליי</h2>
+        <h2>הסיפור שלי</h2>
         <div class="image-placeholder">תמונת פרופיל</div>
-        <p>במשך 15 שנות הוראה, פיתחתי גישה ייחודית המשלבת בין המקצועיות שלי כרואת חשבון ותואר שני, לבין התשוקה שלי לחינוך והוראה מתקנת. אני מאמינה שכל ילד הוא עולם ומלואו, ושהמפתח להצלחה טמון בהתאמת שיטת הלימוד לאופי ולצרכים האישיים של כל תלמיד ותלמידה.</p>
+        <p>כבר 15 שנים אני מלווה תלמידים במסע המרתק של לימודי החשבון. כרואת חשבון בעלת תואר שני, אני מביאה איתי לא רק את הידע המקצועי העמוק, אלא גם את ההבנה כמה חשוב להנגיש את עולם המספרים בצורה ידידותית ומובנת.</p>
+        <p>במהלך השנים פיתחתי שיטה ייחודית המשלבת הוראה מתקנת עם טכנולוגיה מתקדמת, המאפשרת לכל תלמיד ותלמידה לצמוח בקצב שלהם ולפתח אהבה אמיתית למקצוע. אני מאמינה שכל ילד הוא יהלום ייחודי, וששיטת הלימוד צריכה להתאים לאופי ולדרך החשיבה האישית שלו.</p>
     </section>
 
     <section id="methods" class="section" data-aos="fade-up">
         <h2>איך נלמד יחד?</h2>
         <div class="methods">
             <div class="method-card" data-aos="fade-up" data-aos-delay="100">
-                <h3>למידה בהתאמה אישית</h3>
-                <p>כל שיעור מתוכנן במיוחד עבור התלמיד שלי. אנחנו נתחיל מהיסודות שצריך לחזק, ונתקדם בקצב המתאים, תוך שימוש בכלים ושיטות שעובדים הכי טוב עבורו.</p>
+                <h3>למידה מותאמת אישית</h3>
+                <p>כל שיעור הוא מסע מותאם במיוחד לילד שלכם. נתחיל מהבנת נקודות החוזק והאתגרים, נבנה יחד תכנית למידה מדויקת, ונתקדם בקצב המתאים תוך שימוש בכלים ושיטות שעובדים הכי טוב עבורו.</p>
             </div>
             <div class="method-card" data-aos="fade-up" data-aos-delay="200">
-                <h3>טכנולוגיה בשירות הלמידה</h3>
-                <p>השיעורים משלבים אמצעי המחשה דיגיטליים מתקדמים שהופכים את הלמידה למעניינת, אינטראקטיבית ואפקטיבית. הטכנולוגיה עוזרת לנו להפוך מושגים מופשטים לברורים וקלים להבנה.</p>
+                <h3>טכנולוגיה חכמה בשירות הלמידה</h3>
+                <p>בשיעורים שלנו, הטכנולוגיה היא כלי מדהים שהופך מושגים מופשטים למוחשיים. אני משלבת אמצעי המחשה דיגיטליים מתקדמים שהופכים את הלמידה למרתקת ומהנה.</p>
             </div>
             <div class="method-card" data-aos="fade-up" data-aos-delay="300">
-                <h3>בניית ביטחון עצמי</h3>
-                <p>מעבר ללימוד החומר, אני שמה דגש מיוחד על פיתוח תחושת המסוגלות והביטחון העצמי. אנחנו עובדים יחד על פיתוח חשיבה חיובית וכלים להתמודדות עם אתגרים.</p>
+                <h3>פיתוח ביטחון והצלחה</h3>
+                <p>אצלי בשיעורים, אנחנו לא רק פותרים תרגילים - אנחנו בונים ביטחון עצמי. דרך עבודה רגשית ומנטלית, התלמידים שלי לומדים להאמין ביכולות שלהם ומפתחים חשיבה חיובית.</p>
             </div>
             <div class="method-card" data-aos="fade-up" data-aos-delay="400">
-                <h3>תמיכה מתמשכת</h3>
-                <p>הליווי שלי לא מסתיים בסוף השיעור. אני זמינה עבור התלמידים וההורים גם בין השיעורים, למענה על שאלות ותמיכה כשצריך. אנחנו צוות בדרך להצלחה.</p>
+                <h3>ליווי ותמיכה מלאים</h3>
+                <p>אני כאן בשבילכם גם בין השיעורים - זמינה לשאלות, תמיכה והכוונה. בונים יחד רשת ביטחון שמאפשרת לילד שלכם לצמוח ולהתפתח בביטחון מלא.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="section" data-aos="fade-up">
+        <h2>למה ללמוד איתי?</h2>
+        <div class="methods">
+            <div class="method-card">
+                <h3>גישה אישית ומקצועית</h3>
+                <p>תכנית לימודים מותאמת אישית לכל תלמיד, המבוססת על אבחון מדויק של צרכים וסגנון למידה.</p>
+            </div>
+            <div class="method-card">
+                <h3>שיטות מוכחות להצלחה</h3>
+                <p>15 שנות ניסיון בהוראה מתקנת, עם תוצאות מוכחות בשיפור הישגים וביטחון עצמי.</p>
+            </div>
+            <div class="method-card">
+                <h3>אווירה תומכת ומעצימה</h3>
+                <p>סביבת למידה חמה ותומכת, המעודדת שאילת שאלות, התנסות וצמיחה.</p>
+            </div>
+            <div class="method-card">
+                <h3>תקשורת רציפה עם ההורים</h3>
+                <p>עדכונים שוטפים על התקדמות, שיתוף בתהליך הלמידה ובניית אסטרטגיות משותפות להצלחה.</p>
             </div>
         </div>
     </section>
 
     <section id="vision" class="section" data-aos="fade-up">
-        <h2>למה אני מאמינה</h2>
-        <p>אני מאמינה שכל ילד יכול להצליח בחשבון כשמעניקים לו את התמיכה המתאימה. המטרה שלי היא לא רק ללמד חשבון, אלא להעניק לכל תלמיד ותלמידה את הכלים והביטחון להתמודד עם אתגרים, לפתור בעיות ולהאמין ביכולות שלהם. יחד נבנה בסיס איתן להצלחה בלימודים ובחיים.</p>
+        <h2>החזון שלי</h2>
+        <p>אני מאמינה שכל ילד נולד עם היכולת להצליח בחשבון. החזון שלי הוא להפוך את למידת החשבון למסע מרתק של גילוי עצמי והעצמה. אני רואה מעבר לציונים ולהישגים - אני רואה את הפוטנציאל האדיר שטמון בכל תלמיד ותלמידה.</p>
+        <p>השאיפה שלי היא לא רק להעניק כלים להצלחה בחשבון, אלא לטפח דור של לומדים סקרנים ובטוחים בעצמם. דור שמאמין ביכולות שלו, שלא חושש מאתגרים, ושרואה בכל קושי הזדמנות לצמיחה.</p>
     </section>
 
     <section id="faq" class="section" data-aos="fade-up">
@@ -281,15 +411,15 @@
         <div class="faq">
             <div class="faq-item">
                 <h3>למי מתאימים השיעורים?</h3>
-                <p>השיעורים מיועדים לתלמידי בית ספר יסודי שזקוקים לתמיכה וחיזוק בחשבון. אני מתמחה בהוראה מתקנת ובהתאמת שיטות הלימוד לכל תלמיד ותלמידה.</p>
+                <p>השיעורים מיועדים לתלמידי בית ספר יסודי המעוניינים לחזק את הבנתם בחשבון. אני מתמחה במיוחד בהוראה מתקנת ובעבודה עם תלמידים הזקוקים לגישה מותאמת אישית.</p>
             </div>
             <div class="faq-item">
-                <h3>איך מתנהלים השיעורים?</h3>
-                <p>השיעורים מתקיימים באופן פרונטלי, אחד על אחד, באווירה נעימה ותומכת. אנחנו משלבים אמצעי המחשה וטכנולוגיה מתקדמת כדי להפוך את הלמידה למעניינת ואפקטיבית.</p>
+                <h3>איפה מתקיימים השיעורים?</h3>
+                <p>השיעורים מתקיימים באופן פרונטלי באשקלון והסביבה, בסביבת למידה נעימה ומותאמת. אני מקפידה ליצור אווירה תומכת ונינוחה שמאפשרת למידה אופטימלית.</p>
             </div>
             <div class="faq-item">
                 <h3>איך מתחילים?</h3>
-                <p>מתחילים בשיחת היכרות קצרה ושיעור ניסיון, בו נוכל להכיר, לאבחן את הצרכים ולבנות יחד תכנית למידה מותאמת אישית. מוזמנים לתאם פגישה דרך הקלנדלי או לשלוח לי הודעה בוואטסאפ.</p>
+                <p>מתחילים בשיחת היכרות קצרה ושיעור ניסיון, בו נוכל להכיר, לאבחן את הצרכים ולבנות יחד תכנית למידה מותאמת אישית. מוזמנים לתאם מפגש דרך הקלנדלי או לשלוח לי הודעה בוואטסאפ.</p>
             </div>
         </div>
     </section>
@@ -297,22 +427,64 @@
     <section id="contact" class="section" data-aos="fade-up">
         <h2>בואו נתחיל יחד</h2>
         <div class="cta">
-            <a href="https://wa.me/972545886779" class="button" target="_blank">לשיחה בוואטסאפ</a>
-            <a href="https://calendly.com/YOUR_CALENDLY_LINK" class="button" target="_blank">לקביעת שיעור היכרות</a>
+            <a href="https://wa.me/972545886779?text=היי%20אילנית,%20אשמח%20לשמוע%20פרטים%20על%20השיעורים%20הפרטיים%20בחשבון" class="button" target="_blank">לשיחה בוואטסאפ</a>
+            <a href="https://calendly.com/segevim2705/private_lesson_math" class="button" target="_blank">לקביעת שיעור היכרות</a>
         </div>
         <p style="text-align: center; margin-top: 2rem; font-size: 1.1rem;">
             אשמח ללוות את ילדיכם בדרך להצלחה בחשבון ולביטחון עצמי מחוזק. <br>
-            יחד נבנה את היסודות לעתיד מוצלח.
+            יחד נבנה את היסודות לעתיד מבטיח.
         </p>
     </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS
             AOS.init({
                 duration: 800,
                 once: true,
-                offset: 100,
-                easing: 'ease-in-out'
+                offset: 50,
+                easing: 'ease-in-out',
+                disable: 'mobile' // Disable animations on mobile for better performance
+            });
+
+            // Mobile menu functionality
+            const menuButton = document.querySelector('.mobile-menu-button');
+            const menuList = document.querySelector('nav ul');
+            const overlay = document.querySelector('.menu-overlay');
+            const menuLinks = document.querySelectorAll('nav a');
+
+            function toggleMenu() {
+                menuButton.classList.toggle('active');
+                menuList.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = menuList.classList.contains('active') ? 'hidden' : '';
+            }
+
+            menuButton.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
+
+            // Close menu when clicking a link
+            menuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (menuList.classList.contains('active')) {
+                        toggleMenu();
+                    }
+                });
+            });
+
+            // Smooth scroll with offset for fixed header
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offsetTop = target.offsetTop;
+                        window.scrollTo({
+                            top: offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
         });
     </script>
