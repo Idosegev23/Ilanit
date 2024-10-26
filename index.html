@@ -9,13 +9,65 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6B8E23;  /* ירוק זית עדין */
-            --secondary-color: #F8F9FA;
-            --accent-color: #FFA07A;   /* כתום-אפרסק רך */
-            --text-color: #3A4750;
-            --light-bg: #F0F4F0;      /* ירוק בהיר מאוד */
+            --primary-color: #4A90E2;  /* כחול נעים */
+            --secondary-color: #FF6B6B; /* ורוד-אדמדם */
+            --accent-color: #FFD93D;   /* צהוב */
+            --text-color: #2C3E50;
+            --light-bg: #F8F9FA;
             --card-bg: #FFFFFF;
-            --hover-color: #8FBC8F;   /* ירוק בהיר */
+            --hover-color: #357ABD;
+            --gradient-1: #4A90E2;
+            --gradient-2: #FF6B6B;
+            --gradient-3: #FFD93D;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .math-symbol {
+            position: fixed;
+            font-size: 2rem;
+            color: var(--primary-color);
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: -1;
         }
 
         * {
@@ -32,17 +84,37 @@
         body {
             color: var(--text-color);
             line-height: 1.8;
-            background-color: var(--secondary-color);
+            background-color: var(--light-bg);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, 
+                var(--gradient-1), 
+                var(--gradient-2), 
+                var(--gradient-3), 
+                var(--gradient-1));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            opacity: 0.1;
+            z-index: -1;
         }
 
         nav {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.95);
             padding: 1rem;
             position: fixed;
             width: 100%;
             top: 0;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
             z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
         nav ul {
@@ -60,111 +132,65 @@
             transition: all 0.3s ease;
             padding: 0.5rem 1rem;
             border-radius: 20px;
+            position: relative;
+            overflow: hidden;
         }
 
-        nav a:hover {
-            color: var(--primary-color);
-            background-color: var(--light-bg);
-        }
-
-        .mobile-menu-button {
-            display: none;
-            background: none;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
+        nav a::before {
+            content: '';
             position: absolute;
-            right: 1rem;
-            top: 1rem;
-            z-index: 1001;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: -1;
+            border-radius: 20px;
+            opacity: 0.1;
         }
 
-        .mobile-menu-button span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: var(--text-color);
-            margin: 5px 0;
-            transition: all 0.3s ease;
-            border-radius: 3px;
+        nav a:hover::before {
+            transform: translateX(0);
         }
 
-        .mobile-menu-button.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
+        .hero {
+            position: relative;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            overflow: hidden;
         }
 
-        .mobile-menu-button.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu-button.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        .menu-overlay {
-            display: none;
-            position: fixed;
+        .hero::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
-        .menu-overlay.active {
-            display: block;
-        }
-
-        .hero {
-            background: linear-gradient(135deg, var(--light-bg), var(--secondary-color));
-            padding: 8rem 2rem 4rem;
-            text-align: center;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%234A90E2' fill-opacity='0.1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: gradientBG 15s ease infinite;
+            z-index: -1;
         }
 
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             margin-bottom: 1.5rem;
             color: var(--primary-color);
             font-weight: 700;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            color: var(--text-color);
-            line-height: 1.8;
-        }
-
-        .section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section:nth-child(even) {
-            background: var(--light-bg);
-        }
-
-        h2 {
-            color: var(--primary-color);
-            margin-bottom: 2rem;
-            font-size: 2.2rem;
-            text-align: center;
             position: relative;
-            padding-bottom: 1rem;
+            display: inline-block;
         }
 
-        h2::after {
+        .hero h1::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background-color: var(--accent-color);
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             border-radius: 2px;
         }
 
@@ -173,6 +199,7 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
+            justify-items: center;
         }
 
         .method-card {
@@ -181,47 +208,74 @@
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
+            width: 100%;
+            max-width: 350px;
+            position: relative;
+            overflow: hidden;
+            text-align: right;
+        }
+
+        .method-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            border-radius: 4px;
         }
 
         .method-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .method-card h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
             font-size: 1.4rem;
+            position: relative;
+            padding-right: 1rem;
         }
 
-        .faq {
-            max-width: 800px;
-            margin: 0 auto;
+```css
+        .method-card p {
+            color: var(--text-color);
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
         }
 
         .faq-item {
             margin-bottom: 2rem;
-            padding: 1.5rem;
+            padding: 2rem;
             background: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .faq-item h3 {
+        .faq-item::before {
+            content: '?';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            font-size: 8rem;
             color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
+            opacity: 0.05;
+            font-weight: bold;
         }
 
-        .cta {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-top: 3rem;
+        .faq-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
 
         .button {
-            background: var(--primary-color);
+            background: linear-gradient(45deg, var(--primary-color), var(--hover-color));
             color: white;
             padding: 1rem 2.5rem;
             border-radius: 25px;
@@ -229,31 +283,96 @@
             transition: all 0.3s ease;
             display: inline-block;
             font-weight: 500;
-            box-shadow: 0 4px 15px rgba(107, 142, 35, 0.2);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: 0.5s;
         }
 
         .button:hover {
-            background: var(--hover-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(107, 142, 35, 0.3);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
 
-        .image-placeholder {
-            background: linear-gradient(135deg, var(--light-bg), var(--secondary-color));
-            height: 250px;
-            border-radius: 15px;
-            margin: 2rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        .button:hover::before {
+            left: 100%;
         }
 
+        /* מספרים מרחפים */
+        .floating-math {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes fallRotate {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .section {
+            position: relative;
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            opacity: 0.7;
+            z-index: -1;
+            border-radius: 20px;
+        }
+
+        /* אנימציות חדשות למובייל */
         @media (max-width: 768px) {
             .mobile-menu-button {
                 display: block;
+                z-index: 1001;
+                transition: all 0.3s ease;
+            }
+
+            .mobile-menu-button.active {
+                transform: rotate(180deg);
             }
 
             nav ul {
@@ -262,7 +381,8 @@
                 right: -100%;
                 width: 80%;
                 height: 100vh;
-                background: var(--card-bg);
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
                 flex-direction: column;
                 justify-content: flex-start;
                 padding-top: 5rem;
@@ -273,59 +393,17 @@
             nav ul.active {
                 right: 0;
             }
-
-            nav ul li {
-                width: 100%;
-                text-align: center;
-                padding: 1rem;
-            }
-
-            nav a {
-                display: block;
-                padding: 1rem;
-                width: 100%;
-            }
-
-            .hero {
-                padding: 5rem 1rem 2rem;
-            }
-
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-                padding: 0 1rem;
-            }
-
-            .section {
-                padding: 2.5rem 1rem;
-            }
-
-            .method-card {
-                padding: 1.5rem;
-            }
-
-            .cta {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-
-            .cta .button {
-                width: 100%;
-                max-width: 300px;
-                text-align: center;
-            }
-
-            .image-placeholder {
-                height: 200px;
-            }
         }
     </style>
 </head>
 <body>
+    <!-- הוספת אלמנטים מרחפים -->
+    <div class="floating-math"></div>
+
+<body>
+    <!-- אלמנטים מרחפים -->
+    <div class="floating-math"></div>
+    
     <nav>
         <button class="mobile-menu-button" aria-label="תפריט">
             <span></span>
@@ -333,10 +411,10 @@
             <span></span>
         </button>
         <ul>
-            <li><a href="#about">אודותיי</a></li>
+            <li><a href="#about">הסיפור שלי</a></li>
             <li><a href="#methods">דרך הלימוד</a></li>
-            <li><a href="#vision">החזון</a></li>
             <li><a href="#benefits">יתרונות</a></li>
+            <li><a href="#vision">החזון שלי</a></li>
             <li><a href="#faq">שאלות נפוצות</a></li>
             <li><a href="#contact">צרו קשר</a></li>
         </ul>
@@ -344,66 +422,66 @@
     <div class="menu-overlay"></div>
 
     <section class="hero" data-aos="fade-up">
-        <h1>בואו נהפוך את החשבון לחוויה מעצימה</h1>
-        <p>היי, אני אילנית שגב, מורה פרטית לחשבון עם התמחות בהוראה מתקנת. יחד ניצור מסע למידה מותאם אישית שיעניק לילדיכם לא רק הבנה מעמיקה בחשבון, אלא גם כלים לחיים וביטחון עצמי מחוזק.</p>
+        <h1>מגלים את הקסם שבמספרים</h1>
+        <p>ברוכים הבאים לעולם של למידה מותאמת אישית בחשבון. אני אילנית שגב, מורה פרטית עם התמחות בהוראה מתקנת וניסיון של 15 שנים בהוראת מתמטיקה. יחד נהפוך את החשבון מאתגר להזדמנות, מקושי להצלחה, ונבנה ביטחון עצמי שילווה את ילדיכם הרבה מעבר לשיעורי המתמטיקה.</p>
         <div class="image-placeholder">תמונה ראשית</div>
     </section>
 
     <section id="about" class="section" data-aos="fade-up">
         <h2>הסיפור שלי</h2>
         <div class="image-placeholder">תמונת פרופיל</div>
-        <p>כבר 15 שנים אני מלווה תלמידים במסע המרתק של לימודי החשבון. כרואת חשבון בעלת תואר שני, אני מביאה איתי לא רק את הידע המקצועי העמוק, אלא גם את ההבנה כמה חשוב להנגיש את עולם המספרים בצורה ידידותית ומובנת.</p>
-        <p>במהלך השנים פיתחתי שיטה ייחודית המשלבת הוראה מתקנת עם טכנולוגיה מתקדמת, המאפשרת לכל תלמיד ותלמידה לצמוח בקצב שלהם ולפתח אהבה אמיתית למקצוע. אני מאמינה שכל ילד הוא יהלום ייחודי, וששיטת הלימוד צריכה להתאים לאופי ולדרך החשיבה האישית שלו.</p>
+        <p>המסע שלי בעולם ההוראה התחיל לפני 15 שנים, כשהבנתי שהדרך להצלחה במתמטיקה עוברת דרך הלב. כרואת חשבון בעלת תואר שני, חיברתי בין הידע המקצועי העמוק שלי לבין התשוקה להוראה ופיתוח אישי.</p>
+        <p>לאורך השנים פיתחתי שיטה ייחודית המשלבת טכנולוגיה מתקדמת עם גישה אישית ורגשית. אני מאמינה שכל תלמיד הוא עולם ומלואו, עם דרך חשיבה וקצב למידה משלו. השיטה שלי מתאימה את עצמה לכל תלמיד ותלמידה, מזהה את נקודות החוזק שלהם, ובונה איתם יחד את הדרך להצלחה.</p>
     </section>
 
     <section id="methods" class="section" data-aos="fade-up">
-        <h2>איך נלמד יחד?</h2>
+        <h2>איך לומדים איתי?</h2>
         <div class="methods">
             <div class="method-card" data-aos="fade-up" data-aos-delay="100">
-                <h3>למידה מותאמת אישית</h3>
-                <p>כל שיעור הוא מסע מותאם במיוחד לילד שלכם. נתחיל מהבנת נקודות החוזק והאתגרים, נבנה יחד תכנית למידה מדויקת, ונתקדם בקצב המתאים תוך שימוש בכלים ושיטות שעובדים הכי טוב עבורו.</p>
+                <h3>אבחון והתאמה אישית</h3>
+                <p>כל מסע מתחיל בהבנה מעמיקה של הצרכים והיכולות. אנחנו מתחילים באבחון מקיף שמאפשר לי להתאים את שיטת הלימוד בדיוק לדרך שבה הילד שלכם לומד וחושב. התוכנית נבנית במיוחד עבורו, עם דגש על חיזוק נקודות החוזק ופיתוח אסטרטגיות להתמודדות עם אתגרים.</p>
             </div>
             <div class="method-card" data-aos="fade-up" data-aos-delay="200">
-                <h3>טכנולוגיה חכמה בשירות הלמידה</h3>
-                <p>בשיעורים שלנו, הטכנולוגיה היא כלי מדהים שהופך מושגים מופשטים למוחשיים. אני משלבת אמצעי המחשה דיגיטליים מתקדמים שהופכים את הלמידה למרתקת ומהנה.</p>
+                <h3>שילוב טכנולוגיה חדשנית</h3>
+                <p>השיעורים שלנו משלבים כלים טכנולוגיים מתקדמים שהופכים מושגים מופשטים למוחשיים וברורים. אני משתמשת באפליקציות אינטראקטיביות, משחקי למידה דיגיטליים והמחשות ויזואליות שמעוררות עניין ומוטיבציה. הטכנולוגיה מאפשרת לנו לתרגל בדרכים מגוונות ולעקוב אחר ההתקדמות בזמן אמת.</p>
             </div>
             <div class="method-card" data-aos="fade-up" data-aos-delay="300">
-                <h3>פיתוח ביטחון והצלחה</h3>
-                <p>אצלי בשיעורים, אנחנו לא רק פותרים תרגילים - אנחנו בונים ביטחון עצמי. דרך עבודה רגשית ומנטלית, התלמידים שלי לומדים להאמין ביכולות שלהם ומפתחים חשיבה חיובית.</p>
+                <h3>חיזוק הביטחון העצמי</h3>
+                <p>בשיעורים שלי, אנחנו לא רק לומדים חשבון - אנחנו בונים ביטחון עצמי. כל שיעור מתוכנן כך שהתלמיד יחווה הצלחות קטנות שמצטברות להישגים גדולים. אנחנו עובדים על פיתוח חשיבה חיובית, התמודדות עם אתגרים, ובניית תחושת מסוגלות שתלווה את התלמיד בכל תחומי החיים.</p>
             </div>
             <div class="method-card" data-aos="fade-up" data-aos-delay="400">
-                <h3>ליווי ותמיכה מלאים</h3>
-                <p>אני כאן בשבילכם גם בין השיעורים - זמינה לשאלות, תמיכה והכוונה. בונים יחד רשת ביטחון שמאפשרת לילד שלכם לצמוח ולהתפתח בביטחון מלא.</p>
+                <h3>תמיכה מעבר לשיעור</h3>
+                <p>הליווי שלי נמשך גם מעבר לזמן השיעור. אני זמינה לשאלות והתייעצויות, מספקת חומרי תרגול מותאמים אישית, ומקיימת קשר רציף עם ההורים כדי לעדכן על ההתקדמות ולתת כלים לתמיכה בבית. אנחנו צוות שעובד יחד להצלחת הילד שלכם.</p>
             </div>
         </div>
     </section>
 
-    <section id="benefits" class="section" data-aos="fade-up">
-        <h2>למה ללמוד איתי?</h2>
+<section id="benefits" class="section" data-aos="fade-up">
+        <h2>למה לבחור בי?</h2>
         <div class="methods">
-            <div class="method-card">
-                <h3>גישה אישית ומקצועית</h3>
-                <p>תכנית לימודים מותאמת אישית לכל תלמיד, המבוססת על אבחון מדויק של צרכים וסגנון למידה.</p>
+            <div class="method-card" data-aos="fade-up" data-aos-delay="100">
+                <h3>ניסיון מוכח</h3>
+                <p>15 שנות ניסיון בהוראה מתקנת והצלחות מוכחות בשיפור הישגים. השילוב של הרקע המקצועי שלי כרואת חשבון יחד עם ההתמחות בהוראה מתקנת מאפשר לי להנגיש את החומר בצורה ייחודית ואפקטיבית.</p>
             </div>
-            <div class="method-card">
-                <h3>שיטות מוכחות להצלחה</h3>
-                <p>15 שנות ניסיון בהוראה מתקנת, עם תוצאות מוכחות בשיפור הישגים וביטחון עצמי.</p>
+            <div class="method-card" data-aos="fade-up" data-aos-delay="200">
+                <h3>גישה הוליסטית</h3>
+                <p>אני מאמינה בראייה כוללת של הילד - לא רק בהיבט הלימודי אלא גם בהיבט הרגשי והחברתי. הגישה שלי משלבת עבודה על ביטחון עצמי, מיומנויות למידה, וכלים להתמודדות עם חרדת מבחנים.</p>
             </div>
-            <div class="method-card">
-                <h3>אווירה תומכת ומעצימה</h3>
-                <p>סביבת למידה חמה ותומכת, המעודדת שאילת שאלות, התנסות וצמיחה.</p>
+            <div class="method-card" data-aos="fade-up" data-aos-delay="300">
+                <h3>למידה חווייתית</h3>
+                <p>השיעורים שלי מלאים בפעילויות מעניינות, משחקים לימודיים, ואתגרים מחשבתיים שהופכים את הלמידה לחוויה מהנה ומעשירה. אנחנו לומדים תוך כדי עשייה, גילוי והתנסות.</p>
             </div>
-            <div class="method-card">
-                <h3>תקשורת רציפה עם ההורים</h3>
-                <p>עדכונים שוטפים על התקדמות, שיתוף בתהליך הלמידה ובניית אסטרטגיות משותפות להצלחה.</p>
+            <div class="method-card" data-aos="fade-up" data-aos-delay="400">
+                <h3>תקשורת פתוחה</h3>
+                <p>שמירה על קשר רציף עם ההורים, עדכונים שוטפים על ההתקדמות, ושיתוף בתהליך הלמידה. אתם תמיד תדעו איפה הילד שלכם נמצא ולאן הוא מתקדם.</p>
             </div>
         </div>
     </section>
 
     <section id="vision" class="section" data-aos="fade-up">
         <h2>החזון שלי</h2>
-        <p>אני מאמינה שכל ילד נולד עם היכולת להצליח בחשבון. החזון שלי הוא להפוך את למידת החשבון למסע מרתק של גילוי עצמי והעצמה. אני רואה מעבר לציונים ולהישגים - אני רואה את הפוטנציאל האדיר שטמון בכל תלמיד ותלמידה.</p>
-        <p>השאיפה שלי היא לא רק להעניק כלים להצלחה בחשבון, אלא לטפח דור של לומדים סקרנים ובטוחים בעצמם. דור שמאמין ביכולות שלו, שלא חושש מאתגרים, ושרואה בכל קושי הזדמנות לצמיחה.</p>
+        <p>החזון שלי הוא להפוך את למידת החשבון למסע של גילוי עצמי והעצמה. אני מאמינה שכל ילד נולד עם היכולת להצליח במתמטיקה, וששיטת הלימוד הנכונה יכולה לפתוח בפניו עולם שלם של אפשרויות.</p>
+        <p>המטרה שלי היא לא רק לשפר ציונים, אלא לטפח דור של לומדים עצמאיים, סקרנים ובטוחים בעצמם. דור שמסוגל להתמודד עם אתגרים, לחשוב באופן ביקורתי, ולראות במתמטיקה כלי שימושי ומעניין בחיי היומיום.</p>
     </section>
 
     <section id="faq" class="section" data-aos="fade-up">
@@ -411,42 +489,93 @@
         <div class="faq">
             <div class="faq-item">
                 <h3>למי מתאימים השיעורים?</h3>
-                <p>השיעורים מיועדים לתלמידי בית ספר יסודי המעוניינים לחזק את הבנתם בחשבון. אני מתמחה במיוחד בהוראה מתקנת ובעבודה עם תלמידים הזקוקים לגישה מותאמת אישית.</p>
+                <p>השיעורים מיועדים לתלמידי בית ספר יסודי שמתמודדים עם אתגרים בחשבון או רוצים לשפר את הישגיהם. הם מתאימים במיוחד לתלמידים הזקוקים לגישה מותאמת אישית, לאלו שמתמודדים עם חרדת מתמטיקה, וגם לתלמידים מצטיינים שרוצים להעמיק את הבנתם.</p>
             </div>
             <div class="faq-item">
                 <h3>איפה מתקיימים השיעורים?</h3>
-                <p>השיעורים מתקיימים באופן פרונטלי באשקלון והסביבה, בסביבת למידה נעימה ומותאמת. אני מקפידה ליצור אווירה תומכת ונינוחה שמאפשרת למידה אופטימלית.</p>
+                <p>השיעורים מתקיימים באופן פרונטלי באשקלון והסביבה, בסביבת למידה נעימה ומותאמת במיוחד. אני מקפידה ליצור אווירה תומכת ונינוחה שמאפשרת ריכוז ולמידה אפקטיבית.</p>
+            </div>
+            <div class="faq-item">
+                <h3>מה משך ותדירות השיעורים?</h3>
+                <p>כל שיעור נמשך שעה אקדמית (45 דקות), ובדרך כלל מומלץ על מפגש שבועי קבוע. התדירות והמשך יכולים להשתנות בהתאם לצרכי התלמיד והמטרות שהצבנו. השיעור הראשון כולל גם אבחון ראשוני ובניית תכנית עבודה.</p>
             </div>
             <div class="faq-item">
                 <h3>איך מתחילים?</h3>
-                <p>מתחילים בשיחת היכרות קצרה ושיעור ניסיון, בו נוכל להכיר, לאבחן את הצרכים ולבנות יחד תכנית למידה מותאמת אישית. מוזמנים לתאם מפגש דרך הקלנדלי או לשלוח לי הודעה בוואטסאפ.</p>
+                <p>הצעד הראשון הוא שיחת היכרות ושיעור ניסיון, שבהם נוכל להכיר, לאבחן את הצרכים ולבנות יחד תכנית למידה מותאמת אישית. מוזמנים לתאם פגישה דרך הקלנדלי או לשלוח לי הודעה בוואטסאפ לכל שאלה.</p>
             </div>
         </div>
     </section>
 
     <section id="contact" class="section" data-aos="fade-up">
         <h2>בואו נתחיל יחד</h2>
+        <p style="text-align: center; margin-bottom: 2rem;">
+            הצעד הראשון להצלחה הוא להושיט יד לעזרה. אשמח להיות חלק מהמסע של ילדיכם.
+        </p>
         <div class="cta">
-            <a href="https://wa.me/972545886779?text=היי%20אילנית,%20אשמח%20לשמוע%20פרטים%20על%20השיעורים%20הפרטיים%20בחשבון" class="button" target="_blank">לשיחה בוואטסאפ</a>
-            <a href="https://calendly.com/segevim2705/private_lesson_math" class="button" target="_blank">לקביעת שיעור היכרות</a>
+            <a href="https://wa.me/972545886779?text=היי%20אילנית,%20אשמח%20לשמוע%20פרטים%20על%20השיעורים%20הפרטיים%20בחשבון" class="button" target="_blank">
+                לשיחה ראשונה בוואטסאפ
+            </a>
+            <a href="https://calendly.com/segevim2705/private_lesson_math" class="button" target="_blank">
+                לקביעת שיעור היכרות
+            </a>
         </div>
         <p style="text-align: center; margin-top: 2rem; font-size: 1.1rem;">
-            אשמח ללוות את ילדיכם בדרך להצלחה בחשבון ולביטחון עצמי מחוזק. <br>
-            יחד נבנה את היסודות לעתיד מבטיח.
+            יחד נבנה את היסודות להצלחה בחשבון ולביטחון עצמי מחוזק. <br>
+            כל הצלחה מתחילה בצעד קטן אחד.
         </p>
     </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize AOS
+            // Initialize AOS with enhanced settings
             AOS.init({
-                duration: 800,
+                duration: 1000,
                 once: true,
                 offset: 50,
-                easing: 'ease-in-out',
-                disable: 'mobile' // Disable animations on mobile for better performance
+                easing: 'ease-out-cubic'
             });
 
+            // יצירת סימני מתמטיקה מרחפים
+            function createFloatingElements() {
+                const mathSymbols = ['∑', '∫', '÷', '×', '+', '=', 'π'];
+                const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                const container = document.querySelector('.floating-math');
+
+                function createSymbol() {
+                    if (!container) return;
+                    
+                    const element = document.createElement('div');
+                    element.className = 'math-symbol';
+                    element.style.left = `${Math.random() * 100}vw`;
+                    element.textContent = Math.random() > 0.5 
+                        ? mathSymbols[Math.floor(Math.random() * mathSymbols.length)]
+                        : numbers[Math.floor(Math.random() * numbers.length)];
+                    
+                    element.style.animation = `fallRotate ${5 + Math.random() * 10}s linear infinite`;
+                    element.style.fontSize = `${20 + Math.random() * 20}px`;
+                    element.style.opacity = '0.1';
+                    element.style.color = `var(--${Math.random() > 0.5 ? 'primary' : 'secondary'}-color)`;
+                    
+                    container.appendChild(element);
+                    
+                    element.addEventListener('animationend', () => {
+                        element.remove();
+                    });
+                }
+
+                // יצירת סימנים חדשים כל 3 שניות
+                setInterval(createSymbol, 3000);
+                
+                // יצירת מספר סימנים התחלתי
+                for(let i = 0; i < 10; i++) {
+                    createSymbol();
+                }
+            }
+
+            createFloatingElements();
+
+            // [Previous JavaScript functionality remains the same]
+            
             // Mobile menu functionality
             const menuButton = document.querySelector('.mobile-menu-button');
             const menuList = document.querySelector('nav ul');
@@ -461,7 +590,7 @@
             }
 
             menuButton.addEventListener('click', toggleMenu);
-            overlay.addEventListener('click', toggleMenu);
+            overlay?.addEventListener('click', toggleMenu);
 
             // Close menu when clicking a link
             menuLinks.forEach(link => {
@@ -472,15 +601,18 @@
                 });
             });
 
-            // Smooth scroll with offset for fixed header
+            // Smooth scroll with enhanced animation
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
                     const target = document.querySelector(this.getAttribute('href'));
                     if (target) {
-                        const offsetTop = target.offsetTop;
+                        const headerOffset = 70;
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
                         window.scrollTo({
-                            top: offsetTop - 70,
+                            top: offsetPosition,
                             behavior: 'smooth'
                         });
                     }
@@ -490,3 +622,4 @@
     </script>
 </body>
 </html>
+```
