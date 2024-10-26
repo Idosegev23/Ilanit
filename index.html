@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שיעורים פרטיים בחשבון - אילנית שגב</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6B8E23;  /* ירוק זית עדין */
+            --secondary-color: #F8F9FA;
+            --accent-color: #FFA07A;   /* כתום-אפרסק רך */
+            --text-color: #3A4750;
+            --light-bg: #F0F4F0;      /* ירוק בהיר מאוד */
+            --card-bg: #FFFFFF;
+            --hover-color: #8FBC8F;   /* ירוק בהיר */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: var(--text-color);
+            line-height: 1.8;
+            background-color: var(--secondary-color);
+        }
+
+        nav {
+            background: var(--card-bg);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+            background-color: var(--light-bg);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--light-bg), var(--secondary-color));
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section:nth-child(even) {
+            background: var(--light-bg);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .method-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+        }
+
+        .method-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .faq {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .faq-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .button {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(107, 142, 35, 0.2);
+        }
+
+        .button:hover {
+            background: var(--hover-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 142, 35, 0.3);
+        }
+
+        .image-placeholder {
+            background: linear-gradient(135deg, var(--light-bg), var(--secondary-color));
+            height: 250px;
+            border-radius: 15px;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .hero {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .cta {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#about">אודותיי</a></li>
+            <li><a href="#methods">דרך הלימוד</a></li>
+            <li><a href="#vision">החזון</a></li>
+            <li><a href="#faq">שאלות נפוצות</a></li>
+            <li><a href="#contact">צרו קשר</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" data-aos="fade-up">
+        <h1>בואו נלמד חשבון בדרך חדשה</h1>
+        <p>שלום, אני אילנית שגב. אני מזמינה אתכם להצטרף למסע של למידה מותאמת אישית, שתעניק לילדיכם את הכלים והביטחון להצליח בחשבון ומעבר לכך.</p>
+        <div class="image-placeholder">תמונה ראשית</div>
+    </section>
+
+    <section id="about" class="section" data-aos="fade-up">
+        <h2>קצת עליי</h2>
+        <div class="image-placeholder">תמונת פרופיל</div>
+        <p>במשך 15 שנות הוראה, פיתחתי גישה ייחודית המשלבת בין המקצועיות שלי כרואת חשבון ותואר שני, לבין התשוקה שלי לחינוך והוראה מתקנת. אני מאמינה שכל ילד הוא עולם ומלואו, ושהמפתח להצלחה טמון בהתאמת שיטת הלימוד לאופי ולצרכים האישיים של כל תלמיד ותלמידה.</p>
+    </section>
+
+    <section id="methods" class="section" data-aos="fade-up">
+        <h2>איך נלמד יחד?</h2>
+        <div class="methods">
+            <div class="method-card" data-aos="fade-up" data-aos-delay="100">
+                <h3>למידה בהתאמה אישית</h3>
+                <p>כל שיעור מתוכנן במיוחד עבור התלמיד שלי. אנחנו נתחיל מהיסודות שצריך לחזק, ונתקדם בקצב המתאים, תוך שימוש בכלים ושיטות שעובדים הכי טוב עבורו.</p>
+            </div>
+            <div class="method-card" data-aos="fade-up" data-aos-delay="200">
+                <h3>טכנולוגיה בשירות הלמידה</h3>
+                <p>השיעורים משלבים אמצעי המחשה דיגיטליים מתקדמים שהופכים את הלמידה למעניינת, אינטראקטיבית ואפקטיבית. הטכנולוגיה עוזרת לנו להפוך מושגים מופשטים לברורים וקלים להבנה.</p>
+            </div>
+            <div class="method-card" data-aos="fade-up" data-aos-delay="300">
+                <h3>בניית ביטחון עצמי</h3>
+                <p>מעבר ללימוד החומר, אני שמה דגש מיוחד על פיתוח תחושת המסוגלות והביטחון העצמי. אנחנו עובדים יחד על פיתוח חשיבה חיובית וכלים להתמודדות עם אתגרים.</p>
+            </div>
+            <div class="method-card" data-aos="fade-up" data-aos-delay="400">
+                <h3>תמיכה מתמשכת</h3>
+                <p>הליווי שלי לא מסתיים בסוף השיעור. אני זמינה עבור התלמידים וההורים גם בין השיעורים, למענה על שאלות ותמיכה כשצריך. אנחנו צוות בדרך להצלחה.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="vision" class="section" data-aos="fade-up">
+        <h2>למה אני מאמינה</h2>
+        <p>אני מאמינה שכל ילד יכול להצליח בחשבון כשמעניקים לו את התמיכה המתאימה. המטרה שלי היא לא רק ללמד חשבון, אלא להעניק לכל תלמיד ותלמידה את הכלים והביטחון להתמודד עם אתגרים, לפתור בעיות ולהאמין ביכולות שלהם. יחד נבנה בסיס איתן להצלחה בלימודים ובחיים.</p>
+    </section>
+
+    <section id="faq" class="section" data-aos="fade-up">
+        <h2>שאלות נפוצות</h2>
+        <div class="faq">
+            <div class="faq-item">
+                <h3>למי מתאימים השיעורים?</h3>
+                <p>השיעורים מיועדים לתלמידי בית ספר יסודי שזקוקים לתמיכה וחיזוק בחשבון. אני מתמחה בהוראה מתקנת ובהתאמת שיטות הלימוד לכל תלמיד ותלמידה.</p>
+            </div>
+            <div class="faq-item">
+                <h3>איך מתנהלים השיעורים?</h3>
+                <p>השיעורים מתקיימים באופן פרונטלי, אחד על אחד, באווירה נעימה ותומכת. אנחנו משלבים אמצעי המחשה וטכנולוגיה מתקדמת כדי להפוך את הלמידה למעניינת ואפקטיבית.</p>
+            </div>
+            <div class="faq-item">
+                <h3>איך מתחילים?</h3>
+                <p>מתחילים בשיחת היכרות קצרה ושיעור ניסיון, בו נוכל להכיר, לאבחן את הצרכים ולבנות יחד תכנית למידה מותאמת אישית. מוזמנים לתאם פגישה דרך הקלנדלי או לשלוח לי הודעה בוואטסאפ.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section" data-aos="fade-up">
+        <h2>בואו נתחיל יחד</h2>
+        <div class="cta">
+            <a href="https://wa.me/972545886779" class="button" target="_blank">לשיחה בוואטסאפ</a>
+            <a href="https://calendly.com/YOUR_CALENDLY_LINK" class="button" target="_blank">לקביעת שיעור היכרות</a>
+        </div>
+        <p style="text-align: center; margin-top: 2rem; font-size: 1.1rem;">
+            אשמח ללוות את ילדיכם בדרך להצלחה בחשבון ולביטחון עצמי מחוזק. <br>
+            יחד נבנה את היסודות לעתיד מוצלח.
+        </p>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 100,
+                easing: 'ease-in-out'
+            });
+        });
+    </script>
+</body>
+</html>
